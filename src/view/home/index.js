@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './home.css';
-
 import Navbar from '../../components/navbar';
-import { useSelector } from 'react-redux';
 import firebase from '../../config/firebase'
-import EventoCard from '../../components/evento-card';
+import GrupoCard from '../../components/grupo-card';
+
 
 
 
 function Home(){
     
+    const db = firebase.firestore();
+
+    function NovoGrupo(){
+
+    }
     
     
     return(
         <>
             <Navbar/>
             <div className="tela-home">
-        
+                <GrupoCard/>
             </div>
-
         </>
     )
 }
