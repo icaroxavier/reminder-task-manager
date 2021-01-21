@@ -1,0 +1,17 @@
+.btn-enviar{
+    background-color: #111;
+    color: #ffffff;
+}
+
+.btn-enviar:hover{
+    background-color: #F21667;
+    color: #fff;
+}
+
+.recuperar-senha{
+    width: 100%;
+    padding: 15%;
+    margin: auto;
+    background-color: #333;
+    height: 100vh;
+}
