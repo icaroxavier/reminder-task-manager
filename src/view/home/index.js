@@ -3,6 +3,7 @@ import './home.css';
 import Navbar from '../../components/navbar';
 import firebase from '../../config/firebase'
 import GrupoCard from '../../components/grupo-card';
+import Card from '../../components/card';
 
 
 
@@ -20,6 +21,7 @@ function Home(){
         <>
             <Navbar/>
             <div className="tela-home">
+                <Card/>
                 <GrupoCard/>
             </div>
         </>
