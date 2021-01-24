@@ -1,11 +1,11 @@
 import React from 'react';
 import './atividades.css';
 
-function Atividades({nome, id}){
+function Atividades(){
 
 
     return(
-        <button>{nome}</button>
+        <li class="list-group-item">Nãoooooooooooooo</li>
     )
 }
 

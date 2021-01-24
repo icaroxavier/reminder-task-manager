@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Atividades from '../atividades';
 
 import './card.css';
 
@@ -44,7 +45,7 @@ function Card({key, nome, id}){
 
     return(
         
-        <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2 ml-2 flexbox">
+        <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2 flexbox">
             <div className="card bg-dark">
                 {
                     faseNome > 0 ?
@@ -62,9 +63,12 @@ function Card({key, nome, id}){
                 }
                 <div class="card">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Cras justo odio</li>
-                        <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                        <Atividades/>
+                        <Atividades/>
+                        <Atividades/>
+                        <Atividades/>
+                        <Atividades/>
+                        
                     </ul>
                 </div>
                 {
