@@ -12,31 +12,15 @@ import Card from '../../components/card';
 function Home(){
     
     
-    const [nomes, setNomes] = useState([]);
-    let listanomes = [];
-
-    useEffect(() => {
-        firebase.firestore().collection('grupos').get().then(async (resultado) =>{
-            await resultado.docs.forEach(doc =>{
-                listanomes.push({
-                    id: doc.id,
-                    ...doc.data()
-                })
-            })
-
-            setNomes(listanomes);
-        })
-    });
+   
     
-    
-
     
     return(
         <>
             <Navbar/>
             <div className="tela-home">
                 <div className="row">
-                {nomes.map(item => <Card id={item.id} key={item.id} nome={item.nome}/>)}
+                <Card/>
                 <GrupoCard/>
                 </div>
             </div>

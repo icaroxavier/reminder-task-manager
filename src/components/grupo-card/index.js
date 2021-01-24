@@ -17,16 +17,6 @@ function mudarFase(){
 
 function criarGrupo(){
     setFaseBotao(0);
-        
-    firebase.firestore().collection('grupos').add({
-            nome: grupoNome
-        }).then(() => {
-            setFaseBotao(0);
-            }).catch(erro => {
-        alert(erro);
-        setFaseBotao(0);
-    })
-
 }
     
 const handleKeyDown = (event) => {
@@ -36,48 +26,6 @@ const handleKeyDown = (event) => {
     }
   };
 
-/* $('#grupo').keyup(function(event) {
-    if ($("#grupo").is(":focus") && event.key == "Enter") {
-        setFaseBotao(0);
-        
-        db.collection('grupos').add({
-            nome: grupoNome
-        }).then(() => {
-            setFaseBotao(0);
-            }).catch(erro => {
-        alert(erro);
-        setFaseBotao(0);
-    })
-    
-
-
-    }
-}); */
- 
-
-/* $('#grupo').on('keydown', function(event) {
-
-    if(event.keyCode === 13 && fired > 0 ) {
-        setFaseBotao(0);
-        alert('alguma coisa');
-        setFired(0);
-        firebase.firestore().collection('grupos').add({
-            nome: 'coco'
-        }).then(() => {
-            setFaseBotao(0);
-            }).catch(erro => {
-        alert(erro);
-        setFaseBotao(0);
-    });
-        setFaseBotao(0)
-    }
-
-});*/
-
-    
-
-
-     
 
     return(
         
