@@ -19,9 +19,17 @@ function Home(){
         <>
             <Navbar/>
             <div className="tela-home">
-                <div className="row">
-                <Card/>
-                <GrupoCard/>
+                <div className="col-12">
+                    <div className='row'>
+                        <Card/>
+                        <Card/>
+                        <Card/>
+                        <Card/>
+                        <Card/>
+                        <Card/>
+                        <Card/>
+                        <GrupoCard/>
+                    </div>
                 </div>
             </div>
         </>

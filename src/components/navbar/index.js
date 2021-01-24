@@ -12,7 +12,7 @@ function Navbar(){
 
     return(
         
-        <nav className="navbar navbar-expand-lg">
+        <nav className="navbar navbar-expand-lg col-12">
             <i className="fab fa-xing text-white fa-3x ml-2 mr-1"></i>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars text-white"></i>                

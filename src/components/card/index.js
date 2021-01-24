@@ -33,6 +33,12 @@ function Card(){
         }
       };
       
+      function setarFoco() {
+          setTimeout(() => {
+            document.getElementById('inputfocus').focus();
+          }, 500);
+     }
+      
     
     
 
@@ -40,6 +46,12 @@ function Card(){
         
         <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2 flexbox">
             <div className="card bg-dark">
+                <div class="float-right">
+                    <button class="btn btn-default" type="submit">
+                        <i className="fas fa-times-circle float-right"></i>
+                     </button>
+                </div>
+            
                 {
                     faseNome > 0 ?
                 <>
@@ -50,6 +62,7 @@ function Card(){
                     <button onClick={mudarFaseNome} type="button" className="btn btn-lg"><strong>Nome do grupo</strong></button>
                 </>
                 }
+                
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         <Atividades/>
@@ -57,39 +70,29 @@ function Card(){
                         <Atividades/>
                         <Atividades/>
                         <Atividades/>
-                        
                     </ul>
                 </div>
-               
-              
-                    {/* /*  */  }
-                
-                    <button id='button1' type="button" className="btn btn-lg" data-toggle="modal" data-target="#exampleModal">Nova Atividade <strong>+</strong></button>
-                    
-              
-                    
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
+                    <button  onClick={setarFoco} id='button1' type="button" className="btn btn-lg" data-toggle="modal" data-target="#exampleModal">Nova Atividade <strong>+</strong></button>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Crie uma nova atividade</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
+                                        <h5 class="modal-title" id="exampleModalLabel">Crie uma nova atividade</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
                                 </div>
                                 <div class="modal-body">
-                                    <input className="input py-2 col-12" type="text" placeholder="Nome da Atividade" autoFocus/>
+                                        <input id='inputfocus' className="input py-2 col-12" type="text" placeholder="Nome da Atividade" autoFocus/>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn" data-dismiss="modal">Fechar</button>
-                                    <button type="button" class="btn">Criar nova atividade</button>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn">Criar nova atividade</button>
                                 </div>
                             </div>
-                            </div>
-                        
-                
-            </div>
+                        </div>
+                </div>
         </main>
        
     )
