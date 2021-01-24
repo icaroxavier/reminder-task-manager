@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Atividades from '../atividades';
-
 import './card.css';
+import $ from 'jquery';
 
 
 function Card(){
@@ -32,17 +32,9 @@ function Card(){
           setFaseNome(0)
         }
       };
-      const handleKeyDownCard = (event) => {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          setFaseBotao(0)
-        }
-      };
-    
-    
       
     
-
+    
 
     return(
         
@@ -70,38 +62,32 @@ function Card(){
                 </div>
                
               
-                    {/* /* <input onKeyDown={(e) => handleKeyDownCard(e)} id="inputcard" className="input py-2 col-12" type="text" placeholder="Nome da Atividade" autoFocus/> */  }
+                    {/* /*  */  }
                 
-                    <button onClick={mudarFase} type="button" className="btn btn-lg">Nova Atividade <strong>+</strong></button>
+                    <button id='button1' type="button" className="btn btn-lg" data-toggle="modal" data-target="#exampleModal">Nova Atividade <strong>+</strong></button>
                     
               
-                
-                
-                    {
-                        faseBotao > 0 ?
-                        <>
-                            <div class="modal" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
+                    
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
                                 <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="exampleModalLabel">Crie uma nova atividade</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
-                                <p>Modal body text goes here.</p>
+                                    <input className="input py-2 col-12" type="text" placeholder="Nome da Atividade" autoFocus/>
                                 </div>
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn" data-dismiss="modal">Fechar</button>
+                                    <button type="button" class="btn">Criar nova atividade</button>
+                                </div>
                                 </div>
                             </div>
                             </div>
-                            </div>
-                        </>
-                        :
-                        <div>coco</div>
-                  }
-                    
+                        
                 
             </div>
         </main>
@@ -110,3 +96,5 @@ function Card(){
 }
 
 export default Card;
+
+
