@@ -14,3 +14,20 @@
     color: #fff;
 }
 
+
+
+.nome-grupo{
+    width: 100%;
+}
+
+.icon-xzin{
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    color: red;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }

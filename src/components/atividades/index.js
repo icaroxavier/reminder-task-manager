@@ -5,7 +5,7 @@ function Atividades(){
 
 
     return(
-        <li class="list-group-item my-2">Nãoooooooooooooo</li>
+        <li class="list-group-item  bg-info font-weight-bold">Nãoooooooooooooo</li>
     )
 }
 
