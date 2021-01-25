@@ -24,10 +24,10 @@
     position: absolute;
     top: -7px;
     right: -7px;
-    color: red;
+    color:  red;
 }
 
-* {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-  }
+.icon-xzin:hover{
+    color:#f23088;
+}
+

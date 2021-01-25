@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import Navbar from '../../components/navbar';
 import firebase from '../../config/firebase';
-import GrupoCard from '../../components/grupo-card';
+
 import Card from '../../components/card';
+import {useSelector} from 'react-redux';
 
 
 
@@ -12,23 +13,91 @@ import Card from '../../components/card';
 function Home(){
     
     
+    const [grupos, setGrupos] = useState([]);
+    let listagrupos = [];
+    const [controle, setControle] = useState(1);
+    const [grupoNome, setGrupoNome] = useState();
+    const [faseBotao, setFaseBotao] = useState();
+    const usuarioEmail = useSelector(state => state.usuarioEmail);
+    const db = firebase.firestore();
+
+    useEffect(() => {
+        firebase.firestore().collection('grupos').get().then(async (resultado) => {
+            await resultado.docs.forEach(doc => {
+                listagrupos.push({
+                    id: doc.id,
+                    ...doc.data()
+                })
+            })
+            setGrupos(listagrupos)
+        })
+    }, [controle])
+
+    function mudarFase(){
+        setFaseBotao(1);
+    }
+    
+    function criarGrupo(){
+        db.collection('grupos').add({
+            usuario: usuarioEmail,
+            grupoNome: grupoNome
+        }).then(()=> {
+            setFaseBotao(0);
+            setTimeout(() => {
+                mudarControle()
+            }, 500);
+        }).catch(erro =>{
+            setFaseBotao(0);
+        })
+        
+    }
+        
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          criarGrupo()
+          mudarControle()
+        }
+      };
+
+     const mudarControle = function(){
+        if (controle === 0){
+            setControle(1)
+        }else{
+            setControle(0)
+        }
+    }
+    
+    
    
     
     
     return(
         <>
-            <Navbar/>
+            
+            
             <div className="tela-home">
+            <Navbar/>
                 <div className="col-12">
                     <div className='row'>
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                        <Card/>
-                        <GrupoCard/>
+                        {grupos.map(item => <Card id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle}/>)}
+                        <div className="col-md-3 col-sm-4 col-xs-12">
+                            <div className="card-body">
+                            {
+                                faseBotao > 0 ?
+                            <>
+                                
+                                <input id='grupo' onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setGrupoNome(e.target.value)} className="py-2 col-12" type="text" placeholder="Nome do Grupo" autoFocus/>   
+                            
+                            </>
+                            :
+                            <>
+                                <button  onClick={mudarFase} className="btn btn-lg btn-block btn-grupo py-3" type="button">Novo grupo <i className="fas fa-plus"></i></button>
+                                
+                            </>
+                            }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

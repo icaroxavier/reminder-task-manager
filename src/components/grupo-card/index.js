@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../../config/firebase';
 import './grupo-card.css';
-import $ from 'jquery';
+
+import {useSelector} from 'react-redux';
 
 
 
@@ -9,14 +10,30 @@ function GrupoCard(){
 
 const [grupoNome, setGrupoNome] = useState();
 const [faseBotao, setFaseBotao] = useState();
+const usuarioEmail = useSelector(state => state.usuarioEmail);
+
+const db = firebase.firestore();
 
 
 function mudarFase(){
-    setFaseBotao(1);
+    if (faseBotao === 0 || faseBotao == 0){
+        setFaseBotao(1)
+    }else{
+        setFaseBotao(0)
+    }
+    
 }
 
 function criarGrupo(){
-    setFaseBotao(0);
+    db.collection('grupos').add({
+        usuario: usuarioEmail,
+        grupoNome: grupoNome
+    }).then(()=> {
+        setFaseBotao(0);
+    }).catch(erro =>{
+        setFaseBotao(0);
+    })
+    
 }
     
 const handleKeyDown = (event) => {
