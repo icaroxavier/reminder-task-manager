@@ -17,6 +17,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     const ref = useRef();
     const refDeletar = useRef();
     const closeTooltip = () => ref.current.close();
+    const openTooltip = () => ref.current.open();
     const confirmarClose = () => refDeletar.current.close();
 
    
@@ -118,6 +119,10 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         }
     }
 
+    function mudarFaseNome0 (){
+        setFaseNome(0)
+    }
+
        
     
     
@@ -133,13 +138,13 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 {
                     faseNome > 0 ?
                 <>
-                        <input onChange={(e) => setNome(e.target.value)} onKeyDown={(e) => handleKeyDown(e)} id="inputnome" name="grupoNome" placeholder={grupoNome} className="input py-2 col-12" type="text" autoFocus/>
+                        <input  onBlur={mudarFaseNome0} onChange={(e) => setNome(e.target.value)} onKeyDown={(e) => handleKeyDown(e)} id="inputnome" name="grupoNome" placeholder={grupoNome} className="input py-2 col-12" type="text" autoFocus/>
                 </>
                 :
                 <>
                
                     
-                    <Popup trigger={<i  onClick={deletarGrupo} className="fas fa-times-circle fa-2x icon-xzin"></i>} modal ref={refDeletar}>
+                    <Popup position='center' trigger={<i  onClick={deletarGrupo} className="fas fa-times-circle fa-2x icon-xzin"></i>} modal ref={refDeletar}>
                         <div className='col-12 p-1 bg-danger border border-dark rounded'>
                             <h2 className='col-10 text-white text-center ml-4'>O que deseja?</h2>
                             <button type="button" className="btn btn-lg col-5 mr-5 ml-2" onClick={deletarGrupo}>Excluir Grupo</button>
@@ -161,16 +166,19 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                         </div>
                     </ul>
                 </div>
-                <Popup ref={ref} trigger={<button  id='button1' type="button" className="btn btn-lg">Novo Card <strong>+</strong></button>} modal>
-                    <div className='row bg-info p-1 col-6 popupcontent border border-dark rounded'>
+                <button  onClick={openTooltip} id='button1' type="button" className="btn btn-lg">Novo Card <strong>+</strong></button>
+                
+                </div>
+                <Popup modal position='center' ref={ref}>
+                    <div className=' bg-info p-1 col-12 border border-dark rounded'>
                         <h5 className='col-12 text-white'>Digite o nome da sua nova atividade</h5>
                         <input onKeyDown={(e) => atividadeEnter(e)} onChange={(e) => setAtividadeNome(e.target.value)} className="input py-1 col-8" type="text" autoFocus></input>
                         <button type="button" className="btn btn-sm col-3 ml-3" onClick={criarAtividade}>Salvar</button>
                     </div>
                 </Popup>
-                </div>
                 
         </main>
+        
        
     )
 }

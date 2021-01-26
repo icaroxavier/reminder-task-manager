@@ -85,7 +85,9 @@ function Home(){
     }
     
     
-    
+    function mudarFase0(){
+        setFaseBotao(0);
+    }
    
     
     
@@ -104,7 +106,7 @@ function Home(){
                                 faseBotao > 0 ?
                             <>
                                 
-                                <input id='grupo' onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setGrupoNome(e.target.value)} className="py-2 col-12" type="text" placeholder="Nome do Grupo" autoFocus/>   
+                                <input onBlur={mudarFase0} id='grupo' onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setGrupoNome(e.target.value)} className="py-2 col-12" type="text" placeholder="Nome do Grupo" autoFocus/>   
                             
                             </>
                             :
