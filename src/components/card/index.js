@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Atividades from '../atividades';
 import './card.css';
 import firebase from 'firebase';
 import Popup from 'reactjs-popup';
 
 
-function Card({grupoNome, id, atualizarGrupo, controle}){
+function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
 
     const [faseBotao, setFaseBotao] = useState();
     const [faseNome, setFaseNome] = useState();
@@ -14,17 +14,28 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
     let listaatividades = [];  // 
     const [atividades, setAtividades] = useState([]);
     const [controleAtividades, setControleAtividades] = useState(1);
+    const ref = useRef();
+    const refDeletar = useRef();
+    const closeTooltip = () => ref.current.close();
+    const confirmarClose = () => refDeletar.current.close();
+
+   
 
     const db = firebase.firestore();
+
+    
     
 
     function criarAtividade (){
         db.collection('grupos').doc(id).collection('atividades').add({
-            atividadeNome: atividadeNome
+            atividadeNome: atividadeNome,
+            data: Date.now()
         }).then(()=> {
             setTimeout(() => {
                 mudarControleAtividades()
                 atualizarGrupo()
+                closeTooltip()
+               
                 
             }, 500);
             
@@ -35,7 +46,7 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
      }
 
      useEffect(() => {
-        firebase.firestore().collection('grupos').doc(id).collection('atividades').get().then(async (resultado) => {
+        firebase.firestore().collection('grupos').doc(id).collection('atividades').orderBy('data').get().then(async (resultado) => {
             await resultado.docs.forEach(doc => {
                 listaatividades.push({
                     id: doc.id,
@@ -44,7 +55,7 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
             })
             setAtividades(listaatividades)
         })
-    }, [controleAtividades, controle])
+    }, [controleAtividades, controleAtividade, controle])
     
     
 
@@ -59,13 +70,16 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
         setFaseBotao(0)
         
     }
-    function botaoFechar(){
-        alert('Você clicou no X')
+    function deletarGrupo(){
+        firebase.firestore().collection('grupos').doc(id).delete().then(() =>{
+            atualizarGrupo()
+        })
     }
 
     const atividadeEnter = (event) => {
         if (event.keyCode === 13) {
           event.preventDefault();
+          confirmarClose()
           criarAtividade()
           
         }
@@ -111,7 +125,7 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
     return(
         
         <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2">
-            <div className="card">
+            <div>
                 
              
                 
@@ -125,7 +139,13 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
                 <>
                
                     
-                    <i  onClick={botaoFechar} className="fas fa-times-circle fa-2x icon-xzin"></i>
+                    <Popup trigger={<i  onClick={deletarGrupo} className="fas fa-times-circle fa-2x icon-xzin"></i>} modal ref={refDeletar}>
+                        <div className='col-12 p-1 bg-danger border border-dark rounded'>
+                            <h2 className='col-10 text-white text-center ml-4'>O que deseja?</h2>
+                            <button type="button" className="btn btn-lg col-5 mr-5 ml-2" onClick={deletarGrupo}>Excluir Grupo</button>
+                            <button type="button" className="btn btn-lg col-5"onClick={confirmarClose}>Fechar Popup</button>
+                        </div>
+                    </Popup>
                     <button onClick={mudarFaseNome} type="button" className="btn btn-lg nome-grupo"><strong>{grupoNome}</strong></button>
                     
                    
@@ -136,13 +156,14 @@ function Card({grupoNome, id, atualizarGrupo, controle}){
                 
                 <div class="card">
                     <ul class="list-group list-group-flush">
-                        <div>
-                            {atividades.map(item => <Atividades atividadeNome={item.atividadeNome}/>)}
+                        <div className='my-1'>
+                            {atividades.map(item => <Atividades idGrupo={id} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades}/>)}
                         </div>
                     </ul>
                 </div>
-                <Popup trigger={<button  id='button1' type="button" className="btn btn-lg">Nova Atividade <strong>+</strong></button>}>
-                    <div className='row bg-danger p-1 popupcontent'>
+                <Popup ref={ref} trigger={<button  id='button1' type="button" className="btn btn-lg">Novo Card <strong>+</strong></button>} modal>
+                    <div className='row bg-info p-1 col-6 popupcontent border border-dark rounded'>
+                        <h5 className='col-12 text-white'>Digite o nome da sua nova atividade</h5>
                         <input onKeyDown={(e) => atividadeEnter(e)} onChange={(e) => setAtividadeNome(e.target.value)} className="input py-1 col-8" type="text" autoFocus></input>
                         <button type="button" className="btn btn-sm col-3 ml-3" onClick={criarAtividade}>Salvar</button>
                     </div>

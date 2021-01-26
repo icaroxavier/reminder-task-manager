@@ -27,12 +27,12 @@ function Navbar(){
                         
                             <>
                             
-                                <li className="nav-item"><Link className="nav-link" onClick={() => dispatch({type: 'LOG_OUT'})}>Sair </Link></li>
+                                <li className="nav-item"><Link className="nav-link" onClick={() => dispatch({type: 'LOG_OUT'})}></Link></li>
                               
                             </>
                             :
                             <>
-                            <li className="nav-item"><Link className="nav-link" to="/login">Login </Link></li>
+                            <li className="nav-item"><Link className="nav-link" to="/login"></Link></li>
                             
                                 
                             </>

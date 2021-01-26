@@ -10,6 +10,8 @@ import {useSelector} from 'react-redux';
 
 
 
+
+
 function Home(){
     
     
@@ -20,9 +22,10 @@ function Home(){
     const [faseBotao, setFaseBotao] = useState();
     const usuarioEmail = useSelector(state => state.usuarioEmail);
     const db = firebase.firestore();
+    const [passarAtividade, setPassarAtividade] = useState(1);
 
     useEffect(() => {
-        firebase.firestore().collection('grupos').get().then(async (resultado) => {
+        firebase.firestore().collection('grupos').orderBy('data').get().then(async (resultado) => {
             await resultado.docs.forEach(doc => {
                 listagrupos.push({
                     id: doc.id,
@@ -40,7 +43,8 @@ function Home(){
     function criarGrupo(){
         db.collection('grupos').add({
             usuario: usuarioEmail,
-            grupoNome: grupoNome
+            grupoNome: grupoNome,
+            data: Date.now()
         }).then(()=> {
             setFaseBotao(0);
             setTimeout(() => {
@@ -57,6 +61,10 @@ function Home(){
           event.preventDefault();
           criarGrupo()
           mudarControle()
+          setTimeout(() => {
+              mudarControleAtividade()
+          }, 500);
+          
         }
       };
 
@@ -67,6 +75,15 @@ function Home(){
             setControle(0)
         }
     }
+
+    const mudarControleAtividade = function(){
+        if (passarAtividade === 0){
+            setPassarAtividade(1)
+        }else{
+            setPassarAtividade(0)
+        }
+    }
+    
     
     
    
@@ -80,7 +97,7 @@ function Home(){
             <Navbar/>
                 <div className="col-12">
                     <div className='row'>
-                        {grupos.map(item => <Card id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle}/>)}
+                        {grupos.map(item => <Card id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle} controleAtividade={passarAtividade}/>)}
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className="card-body">
                             {
