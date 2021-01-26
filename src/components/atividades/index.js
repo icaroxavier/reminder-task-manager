@@ -4,7 +4,7 @@ import { useState } from 'react';
 import firebase from 'firebase';
 import Popup from 'reactjs-popup';
 
-function Atividades({atividadeNome, id, idGrupo, atualizarAtividades}){
+function Atividades({atividadeNome, id, idGrupo, atualizarAtividades, on, off}){
 
     
     const [novoAtividadeNome, setNovoAtividadeNome] = useState('')
@@ -59,7 +59,7 @@ function Atividades({atividadeNome, id, idGrupo, atualizarAtividades}){
         <div>
              <li class="list-group-item  bg-info font-weight-bold my-1" onClick={openTooltip} >{atividadeNome}</li>
 
-            <Popup modal ref={ref}>
+            <Popup onOpen={on} onClose={off} modal ref={ref}>
                 <li class="list-group-item bg-info font-weight-bold my-1 border border-dark">
                     <input onKeyDown={(e) => atividadeEditarEnter(e)} onChange={(e) => setNovoAtividadeNome(e.target.value)} placeholder={atividadeNome} className="input py-1 col-6 mr-1" type="text" autoFocus></input>
                     <button type="button" onClick={excluirAtividade} className="btn btn-sm py-1 col-4 mr-1" ><strong>Excluir</strong></button>
