@@ -3,6 +3,7 @@ import './atividades.css';
 import { useState } from 'react';
 import firebase from 'firebase';
 import Popup from 'reactjs-popup';
+import Draggable, {DraggableCore} from 'react-draggable';
 
 function Atividades({atividadeNome, id, idGrupo, atualizarAtividades, on, off}){
 
@@ -38,15 +39,16 @@ function Atividades({atividadeNome, id, idGrupo, atualizarAtividades, on, off}){
     const atividadeEditarEnter = (event) => {
         if (event.keyCode === 13) {
           event.preventDefault();
-          if (novoAtividadeNome != '' || novoAtividadeNome != null || novoAtividadeNome != undefined){
+          if (novoAtividadeNome != ''){
           editarNomeAtividade()
           setTimeout(() => {
             atualizarAtividades()
-          }, 200);
-          
+          }, 500);
           closeTooltip()
+          setNovoAtividadeNome('')
         }else{
             closeTooltip()
+            setNovoAtividadeNome('')
         }
           
 
@@ -56,6 +58,7 @@ function Atividades({atividadeNome, id, idGrupo, atualizarAtividades, on, off}){
   
 
     return(
+        <Draggable>
         <div>
              <li class="list-group-item  bg-info font-weight-bold my-1" onClick={openTooltip} >{atividadeNome}</li>
 
@@ -72,6 +75,7 @@ function Atividades({atividadeNome, id, idGrupo, atualizarAtividades, on, off}){
             
             
         </div>
+        </Draggable>
         
     )
 }

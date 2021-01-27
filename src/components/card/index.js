@@ -10,7 +10,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     const [faseBotao, setFaseBotao] = useState();
     const [faseNome, setFaseNome] = useState();
     const [nome, setNome] = useState();
-    const [atividadeNome, setAtividadeNome] = useState();
+    const [atividadeNome, setAtividadeNome] = useState('');
     let listaatividades = [];  // 
     const [atividades, setAtividades] = useState([]);
     const [controleAtividades, setControleAtividades] = useState(1);
@@ -31,6 +31,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     
 
     function criarAtividade (){
+        if (atividadeNome != ''){
         db.collection('grupos').doc(id).collection('atividades').add({
             atividadeNome: atividadeNome,
             data: Date.now()
@@ -39,13 +40,18 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 mudarControleAtividades()
                 atualizarGrupo()
                 closeTooltip()
+                setAtividadeNome('')
                
                 
             }, 500);
             
         }).catch(erro =>{
-            
+            setAtividadeNome('')
         })
+    }else{
+        setAtividadeNome('')
+        closeTooltip()
+    }
         
      }
 
@@ -77,6 +83,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     function deletarGrupo(){
         firebase.firestore().collection('grupos').doc(id).delete().then(() =>{
             atualizarGrupo()
+            off()
         })
     }
 
@@ -86,6 +93,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
           confirmarClose()
           criarAtividade()
           
+          
         }
       };
 
@@ -94,12 +102,13 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         if (event.keyCode === 13) {
           event.preventDefault();
           setFaseNome(0)
-          if(nome === null || nome == null || nome == '' || nome === ''){
+          if(nome == ''){
             atualizarGrupo()
           }else{
             setTimeout(() => {
                 atualizarGrupo()
                   editarNome()
+                  setNome('')
             }, 500);
         }
         }
@@ -124,6 +133,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
 
     function mudarFaseNome0 (){
         setFaseNome(0)
+        setNome('')
     }
     function on() {
         document.getElementById("overlay").style.display = "block";

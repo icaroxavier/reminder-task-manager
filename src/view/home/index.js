@@ -38,9 +38,11 @@ function Home(){
 
     function mudarFase(){
         setFaseBotao(1);
+        setGrupoNome('')
     }
     
     function criarGrupo(){
+        if(grupoNome != ''){
         db.collection('grupos').add({
             usuario: usuarioEmail,
             grupoNome: grupoNome,
@@ -53,7 +55,9 @@ function Home(){
         }).catch(erro =>{
             setFaseBotao(0);
         })
-        
+    }else{
+        setFaseBotao(0)
+    }
     }
         
     const handleKeyDown = (event) => {
@@ -87,6 +91,7 @@ function Home(){
     
     function mudarFase0(){
         setFaseBotao(0);
+        setGrupoNome('')
     }
    
     
