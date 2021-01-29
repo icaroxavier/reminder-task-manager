@@ -1,0 +1,16 @@
+.customlist{
+    background-color:  #f21667;
+    transition: 300ms;
+}
+
+.customlist:hover{
+    background-color: #111;
+    transition: 300ms;
+   
+}
+
+.is-dragging{
+    cursor: move;
+    opacity: 0.3;
+    
+}

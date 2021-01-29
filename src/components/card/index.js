@@ -9,18 +9,20 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
 
     const [faseBotao, setFaseBotao] = useState();
     const [faseNome, setFaseNome] = useState();
-    const [nome, setNome] = useState();
+    const [nome, setNome] = useState('');
     const [atividadeNome, setAtividadeNome] = useState('');
     let listaatividades = [];  // 
     const [atividades, setAtividades] = useState([]);
     const [controleAtividades, setControleAtividades] = useState(1);
     const ref = useRef();
     const refDeletar = useRef();
+    const refDropZone = useRef();
     const closeTooltip = () => ref.current.close();
     const openTooltip = function (){
         ref.current.open()
         on()
     }
+
     const confirmarClose = () => refDeletar.current.close();
 
    
@@ -102,8 +104,9 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         if (event.keyCode === 13) {
           event.preventDefault();
           setFaseNome(0)
-          if(nome == ''){
+          if(nome == '' || nome == undefined){
             atualizarGrupo()
+            setNome('')
           }else{
             setTimeout(() => {
                 atualizarGrupo()
@@ -143,6 +146,27 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         document.getElementById("overlay").style.display = "none";
       }
 
+
+      const dropzones = document.querySelectorAll('.dropzone')
+
+      function dragenter(){
+          console.log('drag enter')
+      }
+      function dragover(){
+        refDropZone.current.classList.add('overcustom')
+
+        const cardBeingDragged = document.querySelector('.is-dragging')
+
+        refDropZone.current.appendChild(cardBeingDragged)
+    }
+    function dragleave(){
+        refDropZone.current.classList.remove('overcustom')
+    }
+    function drop(){
+        refDropZone.current.classList.remove('overcustom')
+    }
+
+      
        
     
     
@@ -150,7 +174,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     return(
         
         
-        <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2">
+        <main className="col-md-3 col-sm-4 col-xs-12 mb-3 mt-2 customshadow">
             <div id="overlay"></div>
             <div>
                 
@@ -183,10 +207,10 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 </>
                 }
                 
-                <div class="card">
-                    <ul class="list-group list-group-flush">
+                <div class="card bg-custom dropzone" onDragEnter={dragenter} onDragOver={dragover} onDragLeave={dragleave} onDrop={drop} >
+                    <ul class="list-group list-group-flush"  ref={refDropZone}> 
                         <div className='my-1'>
-                            {atividades.map(item => <Atividades idGrupo={id} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
+                            {atividades.map((item, index) => <Atividades dropzones={dropzones} key={id} data={item} idGrupo={id} index={index} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
                         </div>
                     </ul>
                 </div>

@@ -45,3 +45,16 @@
     cursor: pointer; /* Add a pointer on hover */
   }
 
+  .bg-custom{
+      background-color: #A5F2F315;
+      transition: 400ms;
+  }
+  
+.highlight{
+    background-color: #A5F2F330;
+    transition: 400ms;
+}
+
+.overcustom{
+    background-color: #A5F2F390;
+}

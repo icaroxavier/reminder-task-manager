@@ -15,6 +15,7 @@ import {useSelector} from 'react-redux';
 function Home(){
     
     
+    
     const [grupos, setGrupos] = useState([]);
     let listagrupos = [];
     const [controle, setControle] = useState(1);
@@ -103,7 +104,7 @@ function Home(){
             <div className="tela-home">
             <Navbar/>
                 <div className="col-12">
-                    <div className='row'>
+                    <div className='row'> 
                         {grupos.map(item => <Card id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle} controleAtividade={passarAtividade}/>)}
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className="card-body">
