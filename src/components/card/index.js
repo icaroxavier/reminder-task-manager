@@ -9,6 +9,8 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
 
     const [faseBotao, setFaseBotao] = useState();
     const [faseNome, setFaseNome] = useState();
+    const [controleDoAdd, setControleDoAdd] = useState(1);
+    const [controleDoLeave, setControleDoLeave] = useState(1);
     const [nome, setNome] = useState('');
     const [atividadeNome, setAtividadeNome] = useState('');
     let listaatividades = [];  // 
@@ -23,13 +25,15 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         on()
     }
 
+
+    const confirmarCloseAbrir = () => refDeletar.current.open();
     const confirmarClose = () => refDeletar.current.close();
 
    
 
     const db = firebase.firestore();
 
-    
+    var DropZoneAtual = document.querySelector('.overcustom')
     
 
     function criarAtividade (){
@@ -85,6 +89,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
     function deletarGrupo(){
         firebase.firestore().collection('grupos').doc(id).delete().then(() =>{
             atualizarGrupo()
+            confirmarClose()
             off()
         })
     }
@@ -153,17 +158,52 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
           console.log('drag enter')
       }
       function dragover(){
+        
         refDropZone.current.classList.add('overcustom')
 
         const cardBeingDragged = document.querySelector('.is-dragging')
 
         refDropZone.current.appendChild(cardBeingDragged)
+        
+        console.log('over')
+        
+         /*if (controleDoAdd > 0){
+        db.collection('grupos').doc(id).collection('atividades').doc(cardBeingDragged.id).add({
+            atividadeNome: cardBeingDragged.value,
+            data: Date.now()
+        }).then(function(){
+            setControleDoAdd(0)
+            
+        }).catch(function(error){
+            console.error("Erro ao adcionar card")
+        })
+        
+        }*/
     }
     function dragleave(){
+        const cardBeingDragged = document.querySelector('.is-dragging')
         refDropZone.current.classList.remove('overcustom')
+        console.log(cardBeingDragged.id)
+
+      /*  if (controleDoLeave > 0){
+            db.collection('grupos').doc(id).collection('atividades').doc(cardBeingDragged.id).delete().then(function(){
+                setControleDoLeave(0)
+                
+            }).catch(function(error){
+                console.error("Erro ao remover card")
+            })
+            
+            }
+            */
+            
+        
     }
     function drop(){
-        refDropZone.current.classList.remove('overcustom')
+        
+       
+        console.log('DROPOU EM ALGUM LUGAR')
+        
+        
     }
 
       
@@ -178,7 +218,15 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
             <div id="overlay"></div>
             <div>
                 
-             
+                    <Popup position='center' onOpen={on} onClose={off} modal ref={refDeletar}>
+                        
+                        <div className='col-12 p-1 bg-danger border border-dark rounded'>
+                            <h2 className='col-10 text-white text-center ml-4'>O que deseja?</h2>
+                            <button type="button" className="btn btn-lg col-5 mr-5 ml-2" onClick={deletarGrupo}>Excluir Grupo</button>
+                            <button type="button" className="btn btn-lg col-5"onClick={confirmarClose}>Fechar Popup</button>
+                        </div>
+                       
+                    </Popup>
                 
                
                 {
@@ -190,15 +238,8 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 <>
                
                     
-                    <Popup position='center' onOpen={on} onClose={off} trigger={<i className="fas fa-times-circle fa-2x icon-xzin"></i>} modal ref={refDeletar}>
-                        
-                        <div className='col-12 p-1 bg-danger border border-dark rounded'>
-                            <h2 className='col-10 text-white text-center ml-4'>O que deseja?</h2>
-                            <button type="button" className="btn btn-lg col-5 mr-5 ml-2" onClick={deletarGrupo}>Excluir Grupo</button>
-                            <button type="button" className="btn btn-lg col-5"onClick={confirmarClose}>Fechar Popup</button>
-                        </div>
-                       
-                    </Popup>
+                    
+                    <i onClick={confirmarCloseAbrir} className="fas fa-times-circle fa-2x icon-xzin"></i>
                     <button onClick={mudarFaseNome} type="button" className="btn btn-lg nome-grupo"><strong>{grupoNome}</strong></button>
                     
                    
@@ -207,10 +248,10 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 </>
                 }
                 
-                <div class="card bg-custom dropzone" onDragEnter={dragenter} onDragOver={dragover} onDragLeave={dragleave} onDrop={drop} >
-                    <ul class="list-group list-group-flush"  ref={refDropZone}> 
+                <div class="card bg-custom dropzone" ref={refDropZone} onDragEnter={dragenter} onDragOver={dragover} onDragLeave={dragleave} >
+                    <ul class="list-group list-group-flush"  onDrop={drop} > 
                         <div className='my-1'>
-                            {atividades.map((item, index) => <Atividades dropzones={dropzones} key={id} data={item} idGrupo={id} index={index} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
+                            {atividades.map((item, index) => <Atividades DropZoneAtual={DropZoneAtual} dropzones={dropzones} data={item} idGrupo={id} index={index} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
                         </div>
                     </ul>
                 </div>

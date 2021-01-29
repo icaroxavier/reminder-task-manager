@@ -7,7 +7,7 @@ import './atividades.css';
 
 
 
-function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, off, index, dropzones}){
+function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, off, DropZoneAtual, dropzones}){
     
     
     const refMeu = useRef();
@@ -36,9 +36,13 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
         setTimeout(() => {
             atualizarAtividades()
         }, 800);
-        
-
     }
+
+
+    function excluirOnDrag(){
+      firebase.firestore().collection('grupos').doc(idGrupo).collection('atividades').doc(id).delete()
+    }
+
 
     function salvarAtividade(){
         if (novoAtividadeNome != ''){
@@ -79,7 +83,7 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
         }
       };
 
-      const cards = document.querySelectorAll('.customcard')
+      
 
       
       
@@ -87,7 +91,11 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
         dropzones.forEach( dropzone => dropzone.classList.add('highlight'))
 
         refCard.current.classList.add('is-dragging')
-        console.log(refCard.current)
+
+        //excluirOnDrag()
+        
+        
+        
       }
 
       function drag(){
@@ -97,13 +105,15 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
           dropzones.forEach ( dropzone => dropzone.classList.remove('highlight'))
           
           refCard.current.classList.remove('is-dragging')
+          
+        
         }
   
 
     return(
         
         <div>
-             <li  ref={refCard} draggable='true' onDragStart={dragstart} onDrag={drag} onDragEnd={dragend} class="list-group-item font-weight-bold my-1 text-white customlist customcard" onClick={openTooltip} >{atividadeNome}</li>
+             <li id={id} value={atividadeNome} ref={refCard} draggable='true' onDragStart={dragstart} onDrag={drag} onDragEnd={dragend} class="list-group-item font-weight-bold my-1 text-white customlist customcard" onClick={openTooltip} >{atividadeNome}</li>
 
             <Popup onOpen={on} onClose={off} modal ref={refMeu}>
                 <li class="list-group-item font-weight-bold my-1 border border-dark">
