@@ -59,6 +59,13 @@ function cadastrar(){
     });
 }
 
+const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      cadastrar()
+      
+    }
+  };
 
 
 
@@ -70,8 +77,8 @@ function cadastrar(){
         <div className="form-cadastro">
            <form className="text-center form-login mx-auto mt-5">
                <h1 className="h3 mb-3 text-white font-weight-bold">Cadastro</h1>
-                <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control my-2" placeholder="Email"/>
-                <input onChange={(e) => setSenha(e.target.value)} type="password" className="form-control my-2" placeholder="Senha"/>
+                <input onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control my-2" placeholder="Email"/>
+                <input onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setSenha(e.target.value)} type="password" className="form-control my-2" placeholder="Senha"/>
 
                 {
                     carregando ? <div class="spinner-border text-danger" role="status"><span class="sr-only">Loading...</span></div>

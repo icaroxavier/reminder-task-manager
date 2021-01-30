@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import './navbar.css';
 import {Link} from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
+import usuarioReducer from '../../store/usuarioReducer';
 
 
 function Navbar(){
 
 
     const dispatch = useDispatch();
-    
+    const usuarioEmail = useSelector(state => state.usuarioEmail);
 
     return(
         
@@ -28,6 +29,7 @@ function Navbar(){
                             <>
                                 <li className="nav-item"><Link className="nav-link" to="/home">Início </Link></li>
                                 <li className="nav-item"><Link className="nav-link" onClick={() => dispatch({type: 'LOG_OUT'})}>Sair</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to="/home">Você está logado com: {usuarioEmail} </Link></li>
                               
                             </>
                             :

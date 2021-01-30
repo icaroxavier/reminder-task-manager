@@ -18,13 +18,21 @@ function UsuarioRecuperarSenha(){
             setMsg('Ops! Verifique se o email está correto e tente novamente!');
         })
     }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          recuperarSenha()
+          
+        }
+      };
     return(
         <>
         <Navbar/>
         <div className="recuperar-senha">
             <form className="text-center form-login mx-auto mt-5">
                 <h3 className="mb-3 font-weight-bold text-white">Recuperar Senha</h3>
-                <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control my-2" placeholder="Email"/>
+                <input onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control my-2" placeholder="Email"/>
 
                 <div className="msg my-4 text-center text-white">
                     <span>{msg}</span>

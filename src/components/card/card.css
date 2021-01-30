@@ -47,12 +47,12 @@
 
   .bg-custom{
       background-color: #A5F2F315;
-      transition: 400ms;
+      transition: 200ms;
   }
   
 .highlight{
     background-color: #A5F2F330;
-    transition: 400ms;
+    transition: 200ms;
 }
 
 .overcustom{

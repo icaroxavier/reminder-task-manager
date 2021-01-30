@@ -29,6 +29,13 @@ function Login(){
         });
 
     }
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          logar()
+          
+        }
+      };
 
     return(
         <>
@@ -44,8 +51,8 @@ function Login(){
             </div>
         
             
-            <input onChange={(e) => setEmail(e.target.value)} type="email" id="inputEmail" class="form-control my-2" placeholder="Email"  />
-            <input onChange={(e) => setSenha(e.target.value)} type="password" id="inputPassword" class="form-control my-2" placeholder="Senha" />
+            <input  onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setEmail(e.target.value)} type="email" id="inputEmail" class="form-control my-2" placeholder="Email"  />
+            <input  onKeyDown={(e) => handleKeyDown(e)} onChange={(e) => setSenha(e.target.value)} type="password" id="inputPassword" class="form-control my-2" placeholder="Senha" />
             
            
             <button onClick={logar} class="btn btn-lg btn-block btn-login" type="button">Logar</button>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import store from '../src/store/';
+import { store, persistor } from '../src/store/';
 import { Provider } from 'react-redux';
-import './index.css'
+import './index.css';
+import { PersistGate } from 'redux-persist/integration/react';
 
 /*PÁGINAS*/
 import Login from './view/login/';
@@ -16,12 +17,14 @@ function App() {
   return (
     
     <Provider store={store}>
-      <Router>
-        <Route exact path='/' component={Login} />
-        <Route exact path='/novousuario' component={NovoUsuario} />
-        <Route exact path='/home' component={Home} />
-        <Route exact path='/recuperarsenha' component={UsuarioRecuperarSenha} />
-      </Router>
+      <PersistGate loading={null} persistor={persistor} >
+        <Router>
+          <Route exact path='/' component={Login} />
+          <Route exact path='/novousuario' component={NovoUsuario} />
+          <Route exact path='/home' component={Home} />
+          <Route exact path='/recuperarsenha' component={UsuarioRecuperarSenha} />
+        </Router>
+      </PersistGate>
     </Provider>
     
   );
