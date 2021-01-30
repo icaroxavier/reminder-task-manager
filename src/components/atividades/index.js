@@ -7,7 +7,7 @@ import './atividades.css';
 
 
 
-function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, off, DropZoneAtual, dropzones}){
+function Atividades({atividadeNome , id, idGrupo, atualizarAtividades, on, off, DropZoneAtual, dropzones, criarAtividadeNaDropZoneAtual, atualizarGrupo}){
     
     
     const refMeu = useRef();
@@ -89,22 +89,23 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
       
       function dragstart(){
         dropzones.forEach( dropzone => dropzone.classList.add('highlight'))
-
         refCard.current.classList.add('is-dragging')
-
-        //excluirOnDrag()
-        
-        
-        
+        excluirOnDrag()
       }
 
-      function drag(){
-         
+        function drag(){
+          
         }
         function dragend(){
+          
           dropzones.forEach ( dropzone => dropzone.classList.remove('highlight'))
           
           refCard.current.classList.remove('is-dragging')
+          criarAtividadeNaDropZoneAtual()
+          atualizarGrupo()
+          
+          
+          
           
         
         }
@@ -112,8 +113,8 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
 
     return(
         
-        <div>
-             <li id={id} value={atividadeNome} ref={refCard} draggable='true' onDragStart={dragstart} onDrag={drag} onDragEnd={dragend} class="list-group-item font-weight-bold my-1 text-white customlist customcard" onClick={openTooltip} >{atividadeNome}</li>
+       <>
+             <li  draggable='true' id={atividadeNome}  ref={refCard}  onDragStart={dragstart} onDrag={drag} onDragEnd={dragend} class="list-group-item font-weight-bold my-1 text-white customlist customcard" onClick={openTooltip} >{atividadeNome}</li>
 
             <Popup onOpen={on} onClose={off} modal ref={refMeu}>
                 <li class="list-group-item font-weight-bold my-1 border border-dark">
@@ -129,7 +130,7 @@ function Atividades({atividadeNome ,data, id, idGrupo, atualizarAtividades, on, 
            
             
             
-        </div>
+        </>
         
         
     )

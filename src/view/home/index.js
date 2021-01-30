@@ -24,6 +24,7 @@ function Home(){
     const usuarioEmail = useSelector(state => state.usuarioEmail);
     const db = firebase.firestore();
     const [passarAtividade, setPassarAtividade] = useState(1);
+    const [dropZoneQueVouUsar, setDropZoneQueVouUsar] = useState();
 
     useEffect(() => {
         firebase.firestore().collection('grupos').orderBy('data').get().then(async (resultado) => {
@@ -105,7 +106,7 @@ function Home(){
             <Navbar/>
                 <div className="col-12">
                     <div className='row'> 
-                        {grupos.map(item => <Card id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle} controleAtividade={passarAtividade}/>)}
+                        {grupos.map(item => <Card dropZoneQueVouUsar={dropZoneQueVouUsar} setDropZoneQueVouUsar={setDropZoneQueVouUsar} id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle} controleAtividade={passarAtividade}/>)}
                         <div className="col-md-3 col-sm-4 col-xs-12">
                             <div className="card-body">
                             {

@@ -5,12 +5,12 @@ import firebase from 'firebase';
 import Popup from 'reactjs-popup';
 
 
-function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
+function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade, dropZoneQueVouUsar, setDropZoneQueVouUsar}){
 
     const [faseBotao, setFaseBotao] = useState();
     const [faseNome, setFaseNome] = useState();
-    const [controleDoAdd, setControleDoAdd] = useState(1);
-    const [controleDoLeave, setControleDoLeave] = useState(1);
+    const [nomeDaAtividadeDragged, setNomeDaAtividadeDragged] = useState();
+    
     const [nome, setNome] = useState('');
     const [atividadeNome, setAtividadeNome] = useState('');
     let listaatividades = [];  // 
@@ -24,6 +24,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         ref.current.open()
         on()
     }
+    const [currentDropZone, setCurrentDropZone] = useState();
 
 
     const confirmarCloseAbrir = () => refDeletar.current.open();
@@ -151,64 +152,43 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
         document.getElementById("overlay").style.display = "none";
       }
 
-
+      
       const dropzones = document.querySelectorAll('.dropzone')
 
       function dragenter(){
-          console.log('drag enter')
+        
+        
       }
       function dragover(){
         
         refDropZone.current.classList.add('overcustom')
-
         const cardBeingDragged = document.querySelector('.is-dragging')
-
-        refDropZone.current.appendChild(cardBeingDragged)
-        
-        console.log('over')
-        
-         /*if (controleDoAdd > 0){
-        db.collection('grupos').doc(id).collection('atividades').doc(cardBeingDragged.id).add({
-            atividadeNome: cardBeingDragged.value,
-            data: Date.now()
-        }).then(function(){
-            setControleDoAdd(0)
-            
-        }).catch(function(error){
-            console.error("Erro ao adcionar card")
-        })
-        
-        }*/
+        var dropzonequevouusar = document.querySelector('.overcustom')
+        setNomeDaAtividadeDragged(cardBeingDragged.id)
+        setDropZoneQueVouUsar(dropzonequevouusar.id)
+        console.log(dropZoneQueVouUsar)
     }
     function dragleave(){
-        const cardBeingDragged = document.querySelector('.is-dragging')
-        refDropZone.current.classList.remove('overcustom')
-        console.log(cardBeingDragged.id)
-
-      /*  if (controleDoLeave > 0){
-            db.collection('grupos').doc(id).collection('atividades').doc(cardBeingDragged.id).delete().then(function(){
-                setControleDoLeave(0)
-                
-            }).catch(function(error){
-                console.error("Erro ao remover card")
-            })
-            
-            }
-            */
-            
         
+        refDropZone.current.classList.remove('overcustom')
+            
     }
     function drop(){
-        
-       
-        console.log('DROPOU EM ALGUM LUGAR')
-        
-        
+        refDropZone.current.classList.remove('overcustom')
+        console.log('DROP')
+    
     }
 
-      
+    function criarAtividadeNaDropZoneAtual (){
+        
+        
+        db.collection('grupos').doc(dropZoneQueVouUsar).collection('atividades').add({
+            atividadeNome: nomeDaAtividadeDragged,
+            data: Date.now()
+        })
+    }
        
-    
+    //const cardBeingDragged = document.querySelector('.is-dragging')
     
 
     return(
@@ -248,11 +228,9 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade}){
                 </>
                 }
                 
-                <div class="card bg-custom dropzone" ref={refDropZone} onDragEnter={dragenter} onDragOver={dragover} onDragLeave={dragleave} >
-                    <ul class="list-group list-group-flush"  onDrop={drop} > 
-                        <div className='my-1'>
-                            {atividades.map((item, index) => <Atividades DropZoneAtual={DropZoneAtual} dropzones={dropzones} data={item} idGrupo={id} index={index} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
-                        </div>
+                <div class="card bg-custom dropzone" id={id} ref={refDropZone} onDragEnter={dragenter} onDragOver={dragover} onDragLeave={dragleave}  onDrop={drop} >
+                    <ul class="list-group unordened"  > 
+                            {atividades.map((item, index) => <Atividades atualizarGrupo={atualizarGrupo} criarAtividadeNaDropZoneAtual={criarAtividadeNaDropZoneAtual} currentDropZone={currentDropZone} refDropZone={refDropZone} DropZoneAtual={DropZoneAtual} dropzones={dropzones} data={item} idGrupo={id} index={index} atividadeNome={item.atividadeNome} id={item.id} atualizarAtividades={mudarControleAtividades} on={on} off={off}/>)}
                     </ul>
                 </div>
                 <button  onClick={openTooltip} id='button1' type="button" className="btn btn-lg">Novo Card <strong>+</strong></button>
