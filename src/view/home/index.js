@@ -35,10 +35,19 @@ function Home(){
                     id: doc.id,
                     ...doc.data()
                 })
+                
+            })
+            
+            listagrupos.sort(function(a, b) {
+                return parseFloat(a.data) - parseFloat(b.data);
             })
             setGrupos(listagrupos)
+            
+            
         })
     }, [controle])
+
+    
 
     function mudarFase(){
         setFaseBotao(1);
@@ -68,6 +77,7 @@ function Home(){
     const handleKeyDown = (event) => {
         if (event.keyCode === 13) {
           event.preventDefault();
+          setFaseBotao(0);
           criarGrupo()
           mudarControle()
           setTimeout(() => {
