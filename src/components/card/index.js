@@ -166,7 +166,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade, dropZ
         var dropzonequevouusar = document.querySelector('.overcustom')
         setNomeDaAtividadeDragged(cardBeingDragged.id)
         setDropZoneQueVouUsar(dropzonequevouusar.id)
-        console.log(dropZoneQueVouUsar)
+        
     }
     function dragleave(){
         

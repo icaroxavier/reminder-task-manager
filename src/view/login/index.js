@@ -35,7 +35,7 @@ function Login(){
         <Navbar/>
         <div className="login-content d-flex align-items-center">
 
-            { useSelector(state => state.usuarioLogado) > 0 ? <Redirect to='/' /> : null}
+            { useSelector(state => state.usuarioLogado) > 0 ? <Redirect to='/home' /> : null}
 
             <form className="form-signin mx-auto">
             <div className="text-center mb-4">

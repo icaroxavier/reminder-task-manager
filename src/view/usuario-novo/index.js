@@ -65,7 +65,7 @@ function cadastrar(){
     return(
         <>
         <Navbar/>
-        {redirecionar ? <Redirect to='/login' /> : null}
+        {redirecionar ? <Redirect to='/' /> : null}
         
         <div className="form-cadastro">
            <form className="text-center form-login mx-auto mt-5">

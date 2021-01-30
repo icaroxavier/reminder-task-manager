@@ -17,9 +17,9 @@ function App() {
     
     <Provider store={store}>
       <Router>
-        <Route exact path='/login' component={Login} />
+        <Route exact path='/' component={Login} />
         <Route exact path='/novousuario' component={NovoUsuario} />
-        <Route exact path='/' component={Home} />
+        <Route exact path='/home' component={Home} />
         <Route exact path='/recuperarsenha' component={UsuarioRecuperarSenha} />
       </Router>
     </Provider>

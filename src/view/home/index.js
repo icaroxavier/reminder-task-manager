@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './home.css';
 import Navbar from '../../components/navbar';
 import firebase from '../../config/firebase';
+import {Redirect} from 'react-router-dom';
 
 import Card from '../../components/card';
 import {useSelector} from 'react-redux';
@@ -25,9 +26,10 @@ function Home(){
     const db = firebase.firestore();
     const [passarAtividade, setPassarAtividade] = useState(1);
     const [dropZoneQueVouUsar, setDropZoneQueVouUsar] = useState();
+    
 
     useEffect(() => {
-        firebase.firestore().collection('grupos').orderBy('data').get().then(async (resultado) => {
+        firebase.firestore().collection('grupos').where("usuario", "==", usuarioEmail).get().then(async (resultado) => {
             await resultado.docs.forEach(doc => {
                 listagrupos.push({
                     id: doc.id,
@@ -49,6 +51,7 @@ function Home(){
             usuario: usuarioEmail,
             grupoNome: grupoNome,
             data: Date.now()
+            
         }).then(()=> {
             setFaseBotao(0);
             setTimeout(() => {
@@ -104,6 +107,7 @@ function Home(){
             
             <div className="tela-home">
             <Navbar/>
+            { useSelector(state => state.usuarioLogado) > 0 ?  null : <Redirect to='/' /> }
                 <div className="col-12">
                     <div className='row'> 
                         {grupos.map(item => <Card dropZoneQueVouUsar={dropZoneQueVouUsar} setDropZoneQueVouUsar={setDropZoneQueVouUsar} id={item.id} grupoNome={item.grupoNome} atualizarGrupo={mudarControle} controle={controle} controleAtividade={passarAtividade}/>)}

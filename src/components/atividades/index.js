@@ -4,6 +4,7 @@ import { useState } from 'react';
 import firebase from 'firebase';
 import Popup from 'reactjs-popup';
 import './atividades.css';
+import $ from 'jquery';
 
 
 
@@ -109,7 +110,7 @@ function Atividades({atividadeNome , id, idGrupo, atualizarAtividades, on, off, 
           
         
         }
-  
+        
 
     return(
         
