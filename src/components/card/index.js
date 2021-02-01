@@ -38,6 +38,7 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade, dropZ
     
 
     function criarAtividade (){
+        closeTooltip()
         if (atividadeNome != ''){
         db.collection('grupos').doc(id).collection('atividades').add({
             atividadeNome: atividadeNome,
@@ -46,18 +47,18 @@ function Card({grupoNome, id, atualizarGrupo, controle, controleAtividade, dropZ
             setTimeout(() => {
                 mudarControleAtividades()
                 atualizarGrupo()
-                closeTooltip()
+                
                 setAtividadeNome('')
                
                 
-            }, 500);
+            }, 300);
             
         }).catch(erro =>{
             setAtividadeNome('')
         })
     }else{
         setAtividadeNome('')
-        closeTooltip()
+        
     }
         
      }
