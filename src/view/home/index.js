@@ -110,7 +110,7 @@ function Home(){
     }
    
     
-    
+
     return(
         <>
             
@@ -140,6 +140,9 @@ function Home(){
                         </div>
                     </div>
                 </div>
+                <footer className='text-white text-center mt-5'>XaloDev<br></br>
+                Copyright © 2021
+                </footer>
             </div>
         </>
     )
